@@ -16,6 +16,8 @@
     <h1>The Truth about Protein</h1>
   </header>
   <main>
+
+    <!-- Delete all this for the finish app -->
     <p>Think you know the truth about Protein?</p><br>
 
 
@@ -31,20 +33,38 @@
     <hr>
     
     <div class="two">
-      <p>Question</p>
+      
 
       <form action="/action_page.php" method="get">
-        <input type="radio" name="true" value="true">
-        <label for="true">True</label><br>
-        <input type="radio" name="false" value="false">
-        <label for="false">False</label><br>
+        <p>QUESTION</p> <!-- fill QUESTION with jQuery -->
+        
+        <div>
+          <input type="radio" id="option1"
+           name="contact" value="text">
+          <label for="option1">ANSWER</label> <!-- fill ANSWER with jQuery to access answers -->
 
-        <button type="submit" value="submit">Submit</button>
-        <button type="reset" value="reset">Reset</button><br>
-        <button type="submit" value="next">Next Question</button>
+          <input type="radio" id="option2"
+           name="contact" value="text">
+          <label for="option2">ANSWER</label>
+      
+          <input type="radio" id="option3"
+           name="contact" value="text">
+          <label for="option3">ANSWER</label>
 
+          <input type="radio" id="option4"
+           name="contact" value="text">
+          <label for="option4">ANSWER</label>
+      
+          <input type="radio" id="option5"
+           name="contact" value="text">
+          <label for="option5">ANSWER</label>
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
       </form>
-    </div>
+    </div>  
+      
 
     <hr>
     <hr>
