@@ -32,15 +32,24 @@ Refer back to the previous checkpoints on responsive design and forms for any he
  * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
  * 
  */
-// create out questions and answers here reference in Html
 
 // // These functions handle events (submit, click, etc)
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
+function quizStart(){
+  return `<p>Think you know the truth about Protein?</p><br>
+    <p>Put your knowledge to the test!</p>
+    <div class="one">
+    <form action="/action_page.php" method="get">
+      <button type="submit" value="submit">Start Quiz</button>
+    </form>
+    </div>`;
+}
+//this function with generate the wireframe for main question page
 function generateQuiz(){
-  //this function with generate the wireframe for main question page
+  
   return `<div class="two">
       
 
@@ -75,8 +84,41 @@ function generateQuiz(){
 </div>`;
 }
 
+function endGame(){
+  `<div class="three">
+  <p>Score</p>
+  <p>
+    Thank you to Dr. Chana Davis, PhD for her research.<br>
+     To learn more please visit (link) <!--https://medium.com/tenderlymag/busting-the-myth-of-incomplete-plant-based-proteins-960428e7e91e  -->
+  </p>
+
+  <form action="/action_page.php" method="get">
+    <button type="submit" value="submit">Start Quiz</button>
+  </form>
+  
+</div>`;
+}
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
+  //should have function to render question
+  
+
+
 
 /********** EVENT HANDLER FUNCTIONS **********/
+function quiz(){
+  //should have quiz html
+  //should have check answers
+  // function to end game??
+}
+
+function handleQuizApp(){
+  //holds all the callback functions like:
+    //Should hold function for starting HTML
+    //should hold function for start button which should call function quiz()
+    
+}
+
+
+$(handleQuizApp);
