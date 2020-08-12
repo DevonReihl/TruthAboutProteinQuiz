@@ -1,6 +1,6 @@
 'use strict';
 
-const store = {
+const STORE = {
   // 5 or more questions are required
   questions: [
     {
@@ -11,7 +11,7 @@ const store = {
         'plants',
         'the moon'
       ],
-      correctAnswer: 'plants'
+      correctAnswer: 'plants, Although animals is where we think about getting our protein it all originates from Plants and Phytoplankton.'
     },
     {
       question: 'Protein is long chains of what?',
@@ -22,6 +22,7 @@ const store = {
         'amino acids'
       ],
       correctAnswer: 'amino acids'
+      
     },
     {
       question: 'How make amino acids are used to build proteins?',

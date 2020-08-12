@@ -38,65 +38,88 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
-function quizStart(){
-  return `<p>Think you know the truth about Protein?</p><br>
-    <p>Put your knowledge to the test!</p>
-    <div class="one">
+
+//This generates the wireframe for the start page
+function generateQuizStart(){
+  return `<header class = "page-header">
+  <h1>The <span class= "text-yellow">Truth</span> about Protein</h1>
+</header>
+<main>
+  <div class="group">
+  <p class="large-text">Think you know the <span class= "text-yellow">Truth</span> about <span class="text-yellow">Protein?</span></p>
+  </div>
+  <div class="group">
+  <p>Put your knowledge to the test!</p>
+  </div>
+  <div class="group">
     <form action="/action_page.php" method="get">
-      <button type="submit" value="submit">Start Quiz</button>
+      <button class='button' type="submit" value="submit">Let's Go!</button>
     </form>
-    </div>`;
+  </div>
+  <div class="group">
+  <p class="signature-text">A sensible quiz by <a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon Reihl</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor Alt</a></p>
+  </div>`;
 }
 //this function with generate the wireframe for main question page
 function generateQuiz(){
   
-  return `<div class="two">
-      
-
+  return `<div class="group">
+  <p class="large-text">Question <span class="text-yellow"># / #</span></p>
+  <p>QuestionText</p>
+</div>
+<div class="group">
   <form action="/action_page.php" method="get">
-    <p>QUESTION</p> <!-- fill QUESTION with jQuery -->
-    
-    <div>
-      <input type="radio" id="option1"
-       name="contact" value="text">
-      <label for="option1">ANSWER</label> <!-- fill ANSWER with jQuery to access answers -->
-
-      <input type="radio" id="option2"
-       name="contact" value="text">
-      <label for="option2">ANSWER</label>
-  
-      <input type="radio" id="option3"
-       name="contact" value="text">
-      <label for="option3">ANSWER</label>
-
-      <input type="radio" id="option4"
-       name="contact" value="text">
-      <label for="option4">ANSWER</label>
-  
-      <input type="radio" id="option5"
-       name="contact" value="text">
-      <label for="option5">ANSWER</label>
+    <div class="choice-group">
+    <input type="radio" name="choice" id="answer1" value="answer1" required="">
+    <label for="answer1">answer1</label>
     </div>
-    <div>
-      <button type="submit">Submit</button>
+    <div class="choice-group">
+    <input type="radio" name="choice" id="answer2" value="answer2" required="">
+    <label for="answer2">answer2</label>
+    </div>
+    <div class="choice-group">
+    <input type="radio" name="choice" id="answer3" value="answer3" required="">
+    <label for="answer3">answer3</label>
+    </div>
+    <div class="choice-group">
+    <input type="radio" name="choice" id="answer4" value="answer4" required="">
+    <label for="answer4">answer4</label>
+    </div>
+
+    <div class="button-group">
+      <button class="button no-answer" type="submit" value="submit">Submit</button>
+      <button class="button" type="reset" value="reset">Reset</button>
+      <button class="button hidden-button" type="submit" value="next">Next Question</button>
     </div>
   </form>
+</div>
+<div class="group">
+  <p class="large-text">Correct <span class="text-yellow"># / #</span></p>
 </div>`;
 }
 
-function endGame(){
-  `<div class="three">
-  <p>Score</p>
-  <p>
-    Thank you to Dr. Chana Davis, PhD for her research.<br>
-     To learn more please visit (link) <!--https://medium.com/tenderlymag/busting-the-myth-of-incomplete-plant-based-proteins-960428e7e91e  -->
-  </p>
-
+function generateEndGame(){
+  `<div class="group">
+  <p class="large-text">Results: <span class="text-yellow"># / #</span></p>
+</div>
+<div class="group">  
+  <p>Thanks for stopping by!</p>
+  <p class="signature-text">-<a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor</a></p>
+</div>
+<div class="group">
+  <div class="explanation" id="explanation-box"> 
+    <p class="explanation-text">A special 'Thank You' to <a href="https://medium.com/tenderlymag/busting-the-myth-of-incomplete-plant-based-proteins-960428e7e91e" target="_blank">Chana Davis, PhD.</a> for her research.</p>
+  </div>
+</div>
+<div class="group">
   <form action="/action_page.php" method="get">
-    <button type="submit" value="submit">Start Quiz</button>
+    <button class="button" type="submit" value="submit">Again!</button>
   </form>
-  
-</div>`;
+</div>
+
+<footer>
+  <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+</footer>`;
 }
 /********** RENDER FUNCTION(S) **********/
 
@@ -114,7 +137,7 @@ function quiz(){
 }
 
 function handleQuizApp(){
-  //holds all the callback functions like:
+  //holds callback functions like:
     //Should hold function for starting HTML
     //should hold function for start button which should call function quiz()
     
