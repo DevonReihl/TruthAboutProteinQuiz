@@ -1,49 +1,16 @@
 'use strict';
 
 
-/* 
- *User experience requirements
-The following requirements cover what the app must do, from the user's perspective.
+//declare global variable
+let score=0;
+let results='';
 
-The starting screen should have a button that users can click to start the quiz.
-Users should be prompted through a series of at least 5 multiple choice questions that they can answer.
-Users should be asked questions 1 after the other.
-Users should only be prompted with 1 question at a time.
-Users should not be able to skip questions.
-Users should also be able to see which question they're on (for instance, "7 out of 10") and their current score ("5 correct, 2 incorrect").
-Upon submitting an answer, users should:
-receive textual feedback about their answer. If they were incorrect, they should be told the correct answer.
-be moved onto the next question (or interact with an element to move on).
-Users should be shown their overall score at the end of the quiz. In other words, how many questions they got right out of the total questions asked.
-Users should be able to start a new quiz.
-Technical requirements
-Your quiz app must:
-
-Include a render() function, that conditionally regenerates the view each time the store is updated.
-Include single-purpose template generation functions.
-Include event handler functions.
-NOT add additional HTML elements to the boilerplate code's index.html file (you may add attributes, e.g., classes and ids, to the existing HTML elements, or link stylesheets or additional scripts if necessary).
-Render answer choices in a <form>.
-Use semantic HTML, along with CSS and jQuery.
-Follow a11y best practices.
-Be fully usable by keyboard (which will be easy enough if you start with a form).
-Use responsive design.
-Refer back to the previous checkpoints on responsive design and forms for any help with the HTML/CSS materials.
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- * 
- */
-
-// // These functions handle events (submit, click, etc)
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
 
 //This generates the html for the landing page
-
-
-//declare global variable
-let score=0;
 
 function generateStartTemplate(){
   return `
@@ -99,7 +66,7 @@ function generateQuestionTemplate(){
   </form>
 </div>
 <div class="group">
-  <p class="large-text">Correct <span class="text-yellow"># / #</span></p>
+  <p class="large-text">Correct <span class="text-yellow">${score} / 6</span></p>
 </div>
 <footer>
     <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
@@ -111,9 +78,9 @@ function generateAnswerTemplate(){
   const i = STORE.currentQuestion;
   return `
   <div class="group">
-  <p class="large-text">You are right!/Not Quite!</p>
+  <p class="large-text">${results}</p>
   <div class="group">
-  <p class="signature-text">Correct <span class="text-yellow"># / #</span></p>
+  <p class="signature-text">Correct <span class="text-yellow">${score} / 6</span></p>
   </div>
   <div class="group">
   <div class="explanation" id="explanation-box"> 
@@ -134,7 +101,7 @@ function generateAnswerTemplate(){
 // this generates the html for the ending page: "We're in the EndGame now." - Doctor Strange
 function generateEndGameTemplate(){
   return `<div class="group">
-  <p class="large-text">Results: <span class="text-yellow"># / #</span></p>
+  <p class="large-text">Results: <span class="text-yellow">You got ${score} / 6!</span></p>
 </div>
 <div class="group">  
   <p>Thanks for stopping by!</p>
@@ -201,10 +168,10 @@ function handleSubmitButton() {
     console.log(selected);
     const answer = selected.val();
     console.log(answer);
-    const result = checkAnswer(answer);
-    console.log(result);
+    results = checkAnswer(answer);
+    console.log(results);
   
-    renderAnswerPage(result);
+    renderAnswerPage(results);
     
   });
 }
@@ -276,11 +243,6 @@ function handleQuizApp(){
   console.log('`handleNextButton` ran');
   handleRestartButton();
   console.log('`handleRestartButton` ran');
-  // renderQuestionPage();
-  // console.log('`renderQuestionPage` ran');
-  //holds callback functions like:
-    //Should hold function for starting HTML
-    //should hold function for start button which should call function quiz()
 }
 
 
