@@ -2,6 +2,7 @@
 
 const STORE = {
   // 5 or more questions are required
+  currentQuestion: 0,
   questions: [
     {
       question: 'How many essential amino acids are there?',

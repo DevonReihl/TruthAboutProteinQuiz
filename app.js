@@ -40,6 +40,8 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 // These functions return HTML templates
 
 //This generates the html for the landing page
+let correctAnswers = 0;
+
 function generateStartTemplate(){
   return `
     <div class="group">
@@ -63,9 +65,9 @@ function generateStartTemplate(){
 
 // This generates the html for the question page
 function generateQuestionTemplate(){
-  const i = STORE.questions.length-1;
+  const i = STORE.currentQuestion;
   return `<div class="group">
-  <p class="large-text">Question <span class="text-yellow">${(6 - STORE.questions.length) +1} of 6</span></p>
+  <p class="large-text">Question <span class="text-yellow">${STORE.currentQuestion + 1} of 6</span></p>
   <p>${STORE.questions[i].question}</p>
 </div>
 <div class="group">
@@ -89,8 +91,7 @@ function generateQuestionTemplate(){
 
     <div class="button-group">
       <button id="submit-button" class="button no-answer" type="submit" value="submit">Submit</button>
-      <button id="restart-button" class="button">Restart</button>
-      <button class="button hidden-button" type="submit" value="next">Next Question</button>
+      <button id="restart-button" class="button" type="submit" value="restart">Restart</button>
     </div>
   </form>
 </div>
@@ -141,9 +142,9 @@ function generateEndGameTemplate(){
   </div>
 </div>
 <div class="group">
-  <form action="/action_page.php" method="get">
-    <button id="restart-button" class="button" type="restart" value="restart">Again!</button>
-  </form>
+<form action="/action_page.php" method="get">
+  <button id="restart-button" class="button" type="submit" value="restart">Again!</button>
+</form>
 </div>
 
 <footer>
@@ -203,42 +204,37 @@ function handleSubmitButton() {
 
 function handleNextButton() {
   $('main').on('click', '#next-button', event => {
-    // removeQuestion();
-    // $(renderAnswerPage()).remove();
     event.preventDefault();
+    STORE.currentQuestion++;
+    // $(renderAnswerPage()).remove();
+    if (testComplete()) {
+      renderEndGamePage();
+    } else {
+      renderQuestionPage();
+    }
+  });
+}
+
+// restarts the quiz and resets variables 
+function handleRestartButton() {
+  $('main').on('click', '#restart-button', event => {
+    event.preventDefault();
+    // correct_answers = 0;
+    STORE.currentQuestion = 0;
     renderQuestionPage();
   });
 }
 
-// // Calls render next question or results page 
-// function handleNextButton() {
-//   $('main').on('click', '.next_button', function () {
-//     removeQuestion();
-//     // if (testFinished()) {
-//     //   renderResultsPage();
-//     // } else {
-//       renderQuestionPage();
-//     // }
-//   });
-// }
-
-// // restarts the quiz and resets variables 
-// function handleRestartButton() {
-//   $('main').on('click', '#restart-button', event => {
-//     event.preventDefault();
-//     // correct_answers = 0;
-//     // questions = populateQuestions();
-//     // $(renderEndGamePage()).remove();
-//     renderQuestionPage();
-//   });
-// }
 
 
-// removes last object in array `STORE` 
-function removeQuestion() {
-  STORE.pop();
+
+
+
+// Return booleans as to whether test is finished 
+function testComplete() {
+  return STORE.questions.length === STORE.currentQuestion;
+  // return 10 === 10; //just for testing results page, then remove  
 }
-
 
 
 
@@ -252,6 +248,8 @@ function handleQuizApp(){
   console.log('`handleSubmitButton` ran');
   handleNextButton();
   console.log('`handleNextButton` ran');
+  handleRestartButton();
+  console.log('`handleRestartButton` ran');
   // renderQuestionPage();
   // console.log('`renderQuestionPage` ran');
   //holds callback functions like:
