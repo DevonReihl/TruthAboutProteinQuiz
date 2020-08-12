@@ -40,7 +40,6 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 // These functions return HTML templates
 
 //This generates the html for the landing page
-
 function generateStartTemplate(){
   return `
     <div class="group">
@@ -60,18 +59,6 @@ function generateStartTemplate(){
     <footer>
     <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
     </footer>`;
-}
-// render landing page in the DOM
-function renderStartPage() {
-  $('main').html(generateStartTemplate());
-}
-
-// on start button 'click' call remove start page, and load question page 
-function handleStartButton() {
-  $('main').on('click', '#start-button', event => {
-    $(renderStartPage()).remove();
-    renderQuestionPage();
-  });
 }
 
 // This generates the html for the question page
@@ -102,7 +89,7 @@ function generateQuestionTemplate(){
 
     <div class="button-group">
       <button id="submit-button" class="button no-answer" type="submit" value="submit">Submit</button>
-      <button class="button" type="reset" value="reset">Reset</button>
+      <button id="restart-button" class="button">Restart</button>
       <button class="button hidden-button" type="submit" value="next">Next Question</button>
     </div>
   </form>
@@ -115,11 +102,7 @@ function generateQuestionTemplate(){
     </footer>`;
 }
 
-// render question page in the DOM
-function renderQuestionPage() {
-  $('main').html(generateQuestionTemplate());
-}
-
+// generates the HTML for the answer page
 function generateAnswerTemplate(){
   return `
   <div class="group">
@@ -134,48 +117,13 @@ function generateAnswerTemplate(){
 </div>
 <form action="/action_page.php" method="get">
 <div class="button-group">
-  <button class="button" type="submit" value="next">Next Question</button>
+  <button id="next-button" class="button" type="submit" value="next">Next Question</button>
 </div>
 </form>
 
 <footer>
   <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
 </footer>`;
-}
-
-function renderAnswerPage() {
-  $('main').html(generateAnswerTemplate());
-}
-
-function handleSubmitButton() {
-  $('main').on('click', '#submit-button', event => {
-    $(renderQuestionPage()).remove();
-    renderAnswerPage();
-  });
-}
-
-function handleNextButton() {
-  $('main').on('click', '#next-button', event => {
-    $(renderAnswerPage()).remove();
-    renderAnswerPage();
-  });
-}
-
-// Calls render next question or results page 
-function handleNextButton() {
-  $('main').on('click', '.next_button', function () {
-    removeQuestion();
-    // if (testFinished()) {
-    //   renderResultsPage();
-    // } else {
-      renderQuestionPage();
-    // }
-  });
-}
-
-// removes last object in array `TORE` 
-function removeQuestion() {
-  STORE.pop();
 }
 
 // this generates the html for the ending page: "We're in the EndGame now." - Doctor Strange
@@ -194,7 +142,7 @@ function generateEndGameTemplate(){
 </div>
 <div class="group">
   <form action="/action_page.php" method="get">
-    <button class="button" type="submit" value="submit">Again!</button>
+    <button id="restart-button" class="button" type="restart" value="restart">Again!</button>
   </form>
 </div>
 
@@ -203,15 +151,31 @@ function generateEndGameTemplate(){
 </footer>`;
 }
 
-function renderEndGamePage() {
-  $('main').html(generateEndGameTemplate());
-}
+
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
-  //should have function to render question
-  
+//should have function to render question
 
+// render landing page in the DOM
+function renderStartPage() {
+  $('main').html(generateStartTemplate());
+}
+
+// render question page in the DOM
+function renderQuestionPage() {
+  $('main').html(generateQuestionTemplate());
+}
+
+//render answer page in the DOM
+function renderAnswerPage() {
+  $('main').html(generateAnswerTemplate());
+}
+
+//render endgame page in the DOM
+function renderEndGamePage() {
+  $('main').html(generateEndGameTemplate());
+}
 
 
 /********** EVENT HANDLER FUNCTIONS **********/
@@ -220,6 +184,65 @@ function quiz(){
   //should have check answers
   // function to end game??
 }
+
+function handleStartButton() {
+  $('main').on('click', '#start-button', event => {
+    // $(renderQuestionPage()).remove();
+    event.preventDefault();
+    renderQuestionPage();
+  });
+}
+
+function handleSubmitButton() {
+  $('main').on('click', '#submit-button', event => {
+    // $(renderQuestionPage()).remove();
+    event.preventDefault();
+    renderAnswerPage();
+  });
+}
+
+function handleNextButton() {
+  $('main').on('click', '#next-button', event => {
+    // removeQuestion();
+    // $(renderAnswerPage()).remove();
+    event.preventDefault();
+    renderQuestionPage();
+  });
+}
+
+// // Calls render next question or results page 
+// function handleNextButton() {
+//   $('main').on('click', '.next_button', function () {
+//     removeQuestion();
+//     // if (testFinished()) {
+//     //   renderResultsPage();
+//     // } else {
+//       renderQuestionPage();
+//     // }
+//   });
+// }
+
+// // restarts the quiz and resets variables 
+// function handleRestartButton() {
+//   $('main').on('click', '#restart-button', event => {
+//     event.preventDefault();
+//     // correct_answers = 0;
+//     // questions = populateQuestions();
+//     // $(renderEndGamePage()).remove();
+//     renderQuestionPage();
+//   });
+// }
+
+
+// removes last object in array `STORE` 
+function removeQuestion() {
+  STORE.pop();
+}
+
+
+
+
+
 
 function handleQuizApp(){
   renderStartPage();
@@ -234,7 +257,6 @@ function handleQuizApp(){
   //holds callback functions like:
     //Should hold function for starting HTML
     //should hold function for start button which should call function quiz()
-    
 }
 
 
