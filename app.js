@@ -76,19 +76,19 @@ function generateQuestionTemplate(){
 <div class="group">
   <form action="/action_page.php" method="get">
     <div class="choice-group">
-    <input type="radio" name="choice" id="answer1" value="answer1" required="">
+    <input type="radio" name="choice" id="answer1" value="${STORE.questions[i].answers[0]}" required="">
     <label for="answer1">${STORE.questions[i].answers[0]}</label>
     </div>
     <div class="choice-group">
-    <input type="radio" name="choice" id="answer2" value="answer2" required="">
+    <input type="radio" name="choice" id="answer2" value="${STORE.questions[i].answers[1]}" required="">
     <label for="answer2">${STORE.questions[i].answers[1]}</label>
     </div>
     <div class="choice-group">
-    <input type="radio" name="choice" id="answer3" value="answer3" required="">
+    <input type="radio" name="choice" id="answer3" value="${STORE.questions[i].answers[2]}" required="">
     <label for="answer3">${STORE.questions[i].answers[2]}</label>
     </div>
     <div class="choice-group">
-    <input type="radio" name="choice" id="answer4" value="answer4" required="">
+    <input type="radio" name="choice" id="answer4" value="${STORE.questions[i].answers[3]}" required="">
     <label for="answer4">${STORE.questions[i].answers[3]}</label>
     </div>
 
@@ -193,10 +193,19 @@ function handleStartButton() {
 }
 
 function handleSubmitButton() {
-  $('main').on('click', '#submit-button', event => {
+  $('main').on('submit', 'form', event => {
     // $(renderQuestionPage()).remove();
     event.preventDefault();
-    renderAnswerPage();
+  
+    const selected = $('input:checked');
+    console.log(selected);
+    const answer = selected.val();
+    console.log(answer);
+    const result = checkAnswer(answer);
+    console.log(result);
+  
+    renderAnswerPage(result);
+    
   });
 }
 
@@ -223,23 +232,26 @@ function handleRestartButton() {
   });
 }
 
-// function increaseScore(){
-//   score++;
-// }
-// function wrongAnswer(){
-//   return `The correct answer is ${STORE.questions[i].correctAnswer}.`;
-// }
+function increaseScore(){
+  score++;
+}
 
-// function checkAnswer(ans){
-  
-//   if (ans === STORE.questions[i] === STORE.correctAnswer){
-//     increaseScore();
-//     return 'Hurray you got it correct!';
-//   }
-//   else{
-//     return wrongAnswer();
-//   }
-// }
+function wrongAnswer(){
+  const i = STORE.currentQuestion;
+  return `The correct answer is ${STORE.questions[i].correctAnswer}.`;
+}
+
+function checkAnswer(ans){
+  const i = STORE.currentQuestion;
+  console.log(ans, STORE.questions[i].correctAnswer);
+  if (ans === STORE.questions[i].correctAnswer){
+    increaseScore();
+    return 'You know a truth about protein!'; 
+  }
+  else{
+    return wrongAnswer();
+  }
+}
 
 
 
