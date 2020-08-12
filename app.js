@@ -209,7 +209,7 @@ function checkAnswer(ans){
   console.log(ans, STORE.questions[i].correctAnswer);
   if (ans === STORE.questions[i].correctAnswer){
     increaseScore();
-    return 'You know a truth about protein!'; 
+    return 'You know the truth about protein!'; 
   }
   else{
     return 'Sorry you got the wrong answer.';
