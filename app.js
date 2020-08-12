@@ -40,8 +40,14 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 // These functions return HTML templates
 
 //This generates the html for the landing page
+<<<<<<< Updated upstream
 let correctAnswers = 0;
 
+=======
+
+//declare global variable
+let correct_answers=0;
+>>>>>>> Stashed changes
 function generateStartTemplate(){
   return `
     <div class="group">
@@ -180,12 +186,6 @@ function renderEndGamePage() {
 
 
 /********** EVENT HANDLER FUNCTIONS **********/
-function quiz(){
-  //should have quiz html
-  //should have check answers
-  // function to end game??
-}
-
 function handleStartButton() {
   $('main').on('click', '#start-button', event => {
     // $(renderQuestionPage()).remove();
@@ -225,7 +225,23 @@ function handleRestartButton() {
   });
 }
 
+function increaseScore(){
+  correctAnswer++;
+}
+function wrongAnswer(){
+  return `The correct answer is ${STORE.questions[i].correctAnswer}.`;
+}
 
+function checkAnswer(ans){
+  
+  if (ans === STORE.questions[i].correctAnswer){
+    increaseScore();
+    return 'Hurray you got it correct!';
+  }
+  else{
+    return wrongAnswer();
+  }
+}
 
 
 
