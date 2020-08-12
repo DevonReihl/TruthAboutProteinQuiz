@@ -39,55 +39,69 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 
 // These functions return HTML templates
 
-//This generates the wireframe for the start page
-function generateQuizStart(){
-  return `<header class = "page-header">
-  <h1>The <span class= "text-yellow">Truth</span> about Protein</h1>
-</header>
-<main>
-  <div class="group">
-  <p class="large-text">Think you know the <span class= "text-yellow">Truth</span> about <span class="text-yellow">Protein?</span></p>
-  </div>
-  <div class="group">
-  <p>Put your knowledge to the test!</p>
-  </div>
-  <div class="group">
-    <form action="/action_page.php" method="get">
-      <button class='button' type="submit" value="submit">Let's Go!</button>
-    </form>
-  </div>
-  <div class="group">
-  <p class="signature-text">A sensible quiz by <a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon Reihl</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor Alt</a></p>
-  </div>`;
+//This generates the html for the landing page
+
+function generateStartTemplate(){
+  return `
+    <div class="group">
+    <p class="large-text">Think you know the <span class= "text-yellow">Truth</span> about <span class="text-yellow">Protein?</span></p>
+    </div>
+    <div class="group">
+    <p>Put your knowledge to the test!</p>
+    </div>
+    <div class="group">
+      <form action="/action_page.php" method="get">
+        <button id='start-button' class='button' type="submit" value="submit">Let's Go!</button>
+      </form>
+    </div>
+    <div class="group">
+    <p class="signature-text">A sensible quiz by <a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon Reihl</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor Alt</a></p>
+    </div>
+    <footer>
+    <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+    </footer>`;
 }
-//this function with generate the wireframe for main question page
-function generateQuiz(){
-  
+// render landing page in the DOM
+function renderStartPage() {
+  $('main').html(generateStartTemplate());
+}
+
+// on start button 'click' call remove start page, and load question page 
+function handleStartButton() {
+  $('main').on('click', '#start-button', event => {
+    $(renderStartPage()).remove();
+    renderQuestionPage();
+  });
+}
+
+// This generates the html for the question page
+function generateQuestionTemplate(){
+  const i = STORE.questions.length-1;
   return `<div class="group">
-  <p class="large-text">Question <span class="text-yellow"># / #</span></p>
-  <p>QuestionText</p>
+  <p class="large-text">Question <span class="text-yellow">${(6 - STORE.questions.length) +1} of 6</span></p>
+  <p>${STORE.questions[i].question}</p>
 </div>
 <div class="group">
   <form action="/action_page.php" method="get">
     <div class="choice-group">
     <input type="radio" name="choice" id="answer1" value="answer1" required="">
-    <label for="answer1">answer1</label>
+    <label for="answer1">${STORE.questions[i].answers[0]}</label>
     </div>
     <div class="choice-group">
     <input type="radio" name="choice" id="answer2" value="answer2" required="">
-    <label for="answer2">answer2</label>
+    <label for="answer2">${STORE.questions[i].answers[1]}</label>
     </div>
     <div class="choice-group">
     <input type="radio" name="choice" id="answer3" value="answer3" required="">
-    <label for="answer3">answer3</label>
+    <label for="answer3">${STORE.questions[i].answers[2]}</label>
     </div>
     <div class="choice-group">
     <input type="radio" name="choice" id="answer4" value="answer4" required="">
-    <label for="answer4">answer4</label>
+    <label for="answer4">${STORE.questions[i].answers[3]}</label>
     </div>
 
     <div class="button-group">
-      <button class="button no-answer" type="submit" value="submit">Submit</button>
+      <button id="submit-button" class="button no-answer" type="submit" value="submit">Submit</button>
       <button class="button" type="reset" value="reset">Reset</button>
       <button class="button hidden-button" type="submit" value="next">Next Question</button>
     </div>
@@ -95,11 +109,78 @@ function generateQuiz(){
 </div>
 <div class="group">
   <p class="large-text">Correct <span class="text-yellow"># / #</span></p>
-</div>`;
+</div>
+<footer>
+    <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+    </footer>`;
 }
 
-function generateEndGame(){
-  `<div class="group">
+// render question page in the DOM
+function renderQuestionPage() {
+  $('main').html(generateQuestionTemplate());
+}
+
+function generateAnswerTemplate(){
+  return `
+  <div class="group">
+  <p class="large-text">You are right!/Not Quite!</p>
+  <div class="group">
+  <p class="signature-text">Correct <span class="text-yellow"># / #</span></p>
+  </div>
+  <div class="group">
+  <div class="explanation" id="explanation-box"> 
+    <p>AnswerValue</p>
+  </div>
+</div>
+<form action="/action_page.php" method="get">
+<div class="button-group">
+  <button class="button" type="submit" value="next">Next Question</button>
+</div>
+</form>
+
+<footer>
+  <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+</footer>`;
+}
+
+function renderAnswerPage() {
+  $('main').html(generateAnswerTemplate());
+}
+
+function handleSubmitButton() {
+  $('main').on('click', '#submit-button', event => {
+    $(renderQuestionPage()).remove();
+    renderAnswerPage();
+  });
+}
+
+function handleNextButton() {
+  $('main').on('click', '#next-button', event => {
+    $(renderAnswerPage()).remove();
+    renderAnswerPage();
+  });
+}
+
+// Calls render next question or results page 
+function handleNextButton() {
+  $('main').on('click', '.next_button', function () {
+    removeQuestion();
+    // if (testFinished()) {
+    //   renderResultsPage();
+    // } else {
+      renderQuestionPage();
+    // }
+  });
+}
+
+// removes last object in array `TORE` 
+function removeQuestion() {
+  STORE.pop();
+}
+
+// this generates the html for the ending page: "We're in the EndGame now." - Doctor Strange
+function generateEndGameTemplate(){
+  return `<div class="group">
   <p class="large-text">Results: <span class="text-yellow"># / #</span></p>
 </div>
 <div class="group">  
@@ -121,6 +202,10 @@ function generateEndGame(){
   <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
 </footer>`;
 }
+
+function renderEndGamePage() {
+  $('main').html(generateEndGameTemplate());
+}
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
@@ -137,6 +222,15 @@ function quiz(){
 }
 
 function handleQuizApp(){
+  renderStartPage();
+  handleStartButton();
+  console.log('`handleStartButton` ran');
+  handleSubmitButton();
+  console.log('`handleSubmitButton` ran');
+  handleNextButton();
+  console.log('`handleNextButton` ran');
+  // renderQuestionPage();
+  // console.log('`renderQuestionPage` ran');
   //holds callback functions like:
     //Should hold function for starting HTML
     //should hold function for start button which should call function quiz()
