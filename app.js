@@ -40,14 +40,11 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 // These functions return HTML templates
 
 //This generates the html for the landing page
-<<<<<<< Updated upstream
-let correctAnswers = 0;
 
-=======
 
 //declare global variable
 let correct_answers=0;
->>>>>>> Stashed changes
+
 function generateStartTemplate(){
   return `
     <div class="group">
@@ -219,7 +216,7 @@ function handleNextButton() {
 function handleRestartButton() {
   $('main').on('click', '#restart-button', event => {
     event.preventDefault();
-    // correct_answers = 0;
+    correct_answers = 0;
     STORE.currentQuestion = 0;
     renderQuestionPage();
   });
