@@ -203,10 +203,6 @@ function increaseScore(){
   score++;
 }
 
-function wrongAnswer(){
-  const i = STORE.currentQuestion;
-  return `The correct answer is ${STORE.questions[i].correctAnswer}.`;
-}
 
 function checkAnswer(ans){
   const i = STORE.currentQuestion;
@@ -216,7 +212,7 @@ function checkAnswer(ans){
     return 'You know a truth about protein!'; 
   }
   else{
-    return wrongAnswer();
+    return 'Sorry you got the wrong answer.';
   }
 }
 
