@@ -43,7 +43,7 @@ Refer back to the previous checkpoints on responsive design and forms for any he
 
 
 //declare global variable
-let correct_answers=0;
+let score=0;
 
 function generateStartTemplate(){
   return `
@@ -108,6 +108,7 @@ function generateQuestionTemplate(){
 
 // generates the HTML for the answer page
 function generateAnswerTemplate(){
+  const i = STORE.currentQuestion;
   return `
   <div class="group">
   <p class="large-text">You are right!/Not Quite!</p>
@@ -116,7 +117,7 @@ function generateAnswerTemplate(){
   </div>
   <div class="group">
   <div class="explanation" id="explanation-box"> 
-    <p>AnswerValue</p>
+    <p>Answer: ${STORE.questions[i].correctAnswer}</p>
   </div>
 </div>
 <form action="/action_page.php" method="get">
@@ -216,29 +217,29 @@ function handleNextButton() {
 function handleRestartButton() {
   $('main').on('click', '#restart-button', event => {
     event.preventDefault();
-    correct_answers = 0;
+    score = 0;
     STORE.currentQuestion = 0;
     renderQuestionPage();
   });
 }
 
-function increaseScore(){
-  correctAnswer++;
-}
-function wrongAnswer(){
-  return `The correct answer is ${STORE.questions[i].correctAnswer}.`;
-}
+// function increaseScore(){
+//   score++;
+// }
+// function wrongAnswer(){
+//   return `The correct answer is ${STORE.questions[i].correctAnswer}.`;
+// }
 
-function checkAnswer(ans){
+// function checkAnswer(ans){
   
-  if (ans === STORE.questions[i].correctAnswer){
-    increaseScore();
-    return 'Hurray you got it correct!';
-  }
-  else{
-    return wrongAnswer();
-  }
-}
+//   if (ans === STORE.questions[i] === STORE.correctAnswer){
+//     increaseScore();
+//     return 'Hurray you got it correct!';
+//   }
+//   else{
+//     return wrongAnswer();
+//   }
+// }
 
 
 
@@ -246,7 +247,7 @@ function checkAnswer(ans){
 // Return booleans as to whether test is finished 
 function testComplete() {
   return STORE.questions.length === STORE.currentQuestion;
-  // return 10 === 10; //just for testing results page, then remove  
+//   // return 10 === 10; //just for testing results page, then remove  
 }
 
 
