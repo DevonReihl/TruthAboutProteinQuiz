@@ -1,75 +1,76 @@
+/* eslint-disable no-undef */
 'use strict';
-
 
 //declare global variable
 let score=0;
 let results='';
 
-
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
 
-//This generates the html for the landing page
-
+// This generates the html for the landing page
 function generateStartTemplate(){
   return `
     <div class="group">
-    <p class="large-text">Think you know the <span class= "text-yellow">Truth</span> about <span class="text-yellow">Protein?</span></p>
+      <p class="large-text">think you know the <span class= "text-yellow">truth</span> about <span class="text-yellow">protein?</span></p>
     </div>
     <div class="group">
-    <p>Put your knowledge to the test!</p>
+      <p>put your knowledge to the test!</p>
     </div>
     <div class="group">
       <form action="/action_page.php" method="get">
-        <button id='start-button' class='button' type="submit" value="submit">Let's Go!</button>
+        <button id='start-button' class='button' type="submit" value="submit">let's go!</button>
       </form>
     </div>
     <div class="group">
-    <p class="signature-text">A sensible quiz by <a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon Reihl</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor Alt</a></p>
+      <p class="signature-text">a sensible quiz by <a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon Reihl</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor Alt</a>.</p>
     </div>
     <footer>
-    <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+      <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
     </footer>`;
 }
 
 // This generates the html for the question page
 function generateQuestionTemplate(){
   const i = STORE.currentQuestion;
-  return `<div class="group">
-  <p class="large-text">Question <span class="text-yellow">${STORE.currentQuestion + 1} of 6</span></p>
-  <p>${STORE.questions[i].question}</p>
-</div>
-<div class="group">
-  <form action="/action_page.php" method="get">
-    <div class="choice-group">
-    <input type="radio" name="choice" id="answer1" value="${STORE.questions[i].answers[0]}" required="">
-    <label for="answer1">${STORE.questions[i].answers[0]}</label>
+  return `
+    <div class="group">
+      <p class="large-text">question <span class="text-yellow">${STORE.currentQuestion + 1} of 6</span></p>
+      <p>${STORE.questions[i].question}</p>
     </div>
-    <div class="choice-group">
-    <input type="radio" name="choice" id="answer2" value="${STORE.questions[i].answers[1]}" required="">
-    <label for="answer2">${STORE.questions[i].answers[1]}</label>
-    </div>
-    <div class="choice-group">
-    <input type="radio" name="choice" id="answer3" value="${STORE.questions[i].answers[2]}" required="">
-    <label for="answer3">${STORE.questions[i].answers[2]}</label>
-    </div>
-    <div class="choice-group">
-    <input type="radio" name="choice" id="answer4" value="${STORE.questions[i].answers[3]}" required="">
-    <label for="answer4">${STORE.questions[i].answers[3]}</label>
-    </div>
+    <div>
+      <form action="/action_page.php" method="get">
+        <div class="flex-inline">
+          <div class="choice-group question">
+            <input type="radio" name="choice" id="answer1" value="${STORE.questions[i].answers[0]}" required="">
+            <label for="answer1">${STORE.questions[i].answers[0]}</label>
+          </div>
+          <div class="choice-group question">
+            <input type="radio" name="choice" id="answer2" value="${STORE.questions[i].answers[1]}">
+            <label for="answer2">${STORE.questions[i].answers[1]}</label>
+          </div>
+          <div class="choice-group question">
+            <input type="radio" name="choice" id="answer3" value="${STORE.questions[i].answers[2]}">
+            <label for="answer3">${STORE.questions[i].answers[2]}</label>
+          </div>
+          <div class="choice-group question">
+            <input type="radio" name="choice" id="answer4" value="${STORE.questions[i].answers[3]}">
+            <label for="answer4">${STORE.questions[i].answers[3]}</label>
+          </div>
+        </div>
 
-    <div class="button-group">
-      <button id="submit-button" class="button no-answer" type="submit" value="submit">Submit</button>
-      <button id="restart-button" class="button" type="submit" value="restart">Restart</button>
+        <div class="button-group">
+          <button id="submit-button" class="button" type="submit" value="submit">submit.</button>
+          <button id="restart-button" class="button" type="submit" value="restart">restart.</button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-<div class="group">
-  <p class="large-text">Correct <span class="text-yellow">${score} / 6</span></p>
-</div>
-<footer>
-    <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+    <div class="group">
+      <p class="large-text">correct <span class="text-yellow">${score} / 6</span></p>
+    </div>
+    <footer>
+      <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
     </footer>`;
 }
 
@@ -77,50 +78,54 @@ function generateQuestionTemplate(){
 function generateAnswerTemplate(){
   const i = STORE.currentQuestion;
   return `
-  <div class="group">
-  <p class="large-text">${results}</p>
-  <div class="group">
-  <p class="signature-text">Correct <span class="text-yellow">${score} / 6</span></p>
-  </div>
-  <div class="group">
-  <div class="explanation" id="explanation-box"> 
-    <p>Answer: ${STORE.questions[i].correctAnswer}</p>
-  </div>
-</div>
-<form action="/action_page.php" method="get">
-<div class="button-group">
-  <button id="next-button" class="button" type="submit" value="next">Next Question</button>
-</div>
-</form>
-
-<footer>
-  <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
-</footer>`;
+    <div class="group">
+      <p class="large-text">${results}</p>
+      <p><span class="correct-text">correct answer:</span> ${STORE.questions[i].correctAnswer}</p>
+    <div class="group">
+      <p class="correct-text">correct <span class="text-yellow">${score} / 6</span></p>
+    </div>
+    <div class="group">
+      <div class="explanation" id="explanation-box"> 
+        <p class="explanation-text">${STORE.questions[i].explainMore}</p>
+      </div>
+    </div>
+    <div-class="group">
+      <form action="/action_page.php" method="get">
+        <div class="button-group">
+          <button id="next-button" class="button" type="submit" value="next">next.</button>
+        </div>
+      </form>
+    </div>
+    <footer>
+      <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+    </footer>`;
 }
 
 // this generates the html for the ending page: "We're in the EndGame now." - Doctor Strange
 function generateEndGameTemplate(){
-  return `<div class="group">
-  <p class="large-text">Results: <span class="text-yellow">You got ${score} / 6!</span></p>
-</div>
-<div class="group">  
-  <p>Thanks for stopping by!</p>
-  <p class="signature-text">-<a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor</a></p>
-</div>
-<div class="group">
-  <div class="explanation" id="explanation-box"> 
-    <p class="explanation-text">A special 'Thank You' to <a href="https://medium.com/tenderlymag/busting-the-myth-of-incomplete-plant-based-proteins-960428e7e91e" target="_blank">Chana Davis, PhD.</a> for her research.</p>
-  </div>
-</div>
-<div class="group">
-<form action="/action_page.php" method="get">
-  <button id="restart-button" class="button" type="submit" value="restart">Again!</button>
-</form>
-</div>
-
-<footer>
-  <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
-</footer>`;
+  return `
+    <div class="group">
+      <p class="large-text">results: <span class="text-yellow">you got ${score} / 6!</span></p>
+    </div>
+    <div class="group">  
+      <p>thanks for stopping by!</p>
+      <p class="signature-text">-<a href="https://devonreihl.github.io/portfolio.github.io/" target="_blank">Devon</a> and <a href="https://trevorjalt.github.io/trevorjalt" target="_blank">Trevor</a></p>
+    </div>
+    <div class="group">
+      <div class="explanation" id="explanation-box"> 
+        <p class="explanation-text">a special 'thank you' to <a href="https://medium.com/tenderlymag/busting-the-myth-of-incomplete-plant-based-proteins-960428e7e91e" target="_blank">Chana Davis, PhD.</a> for her research.</p>
+      </div>
+    </div>
+    <div class="group">
+      <form action="/action_page.php" method="get">
+        <div class="button-group">
+          <button id="restart-button" class="button" type="submit" value="restart">again!</button>
+        </div>
+      </form>
+    </div>
+    <footer>
+      <h2 class="footer-copy">© Copyright Devon Reihl and Trevor J Alt. All Rights Reserved.</h2>
+    </footer>`;
 }
 
 
@@ -165,11 +170,8 @@ function handleSubmitButton() {
     event.preventDefault();
   
     const selected = $('input:checked');
-    console.log(selected);
     const answer = selected.val();
-    console.log(answer);
     results = checkAnswer(answer);
-    console.log(results);
   
     renderAnswerPage(results);
     
@@ -180,7 +182,6 @@ function handleNextButton() {
   $('main').on('click', '#next-button', event => {
     event.preventDefault();
     STORE.currentQuestion++;
-    // $(renderAnswerPage()).remove();
     if (testComplete()) {
       renderEndGamePage();
     } else {
@@ -206,39 +207,28 @@ function increaseScore(){
 
 function checkAnswer(ans){
   const i = STORE.currentQuestion;
-  console.log(ans, STORE.questions[i].correctAnswer);
   if (ans === STORE.questions[i].correctAnswer){
     increaseScore();
-    return 'You know the truth about protein!'; 
+    return 'you know a truth about protein!'; 
   }
   else{
-    return 'Sorry you got the wrong answer.';
+    return 'sorry, you got the wrong answer.';
   }
 }
-
-
-
 
 // Return booleans as to whether test is finished 
 function testComplete() {
-  return STORE.questions.length === STORE.currentQuestion;
-//   // return 10 === 10; //just for testing results page, then remove  
+  return STORE.questions.length === STORE.currentQuestion; 
 }
-
-
 
 
 
 function handleQuizApp(){
   renderStartPage();
   handleStartButton();
-  console.log('`handleStartButton` ran');
   handleSubmitButton();
-  console.log('`handleSubmitButton` ran');
   handleNextButton();
-  console.log('`handleNextButton` ran');
   handleRestartButton();
-  console.log('`handleRestartButton` ran');
 }
 
 

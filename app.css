@@ -37,7 +37,7 @@ header h1 {
   }
 
 .text-yellow {
-  color: #e9b44c;
+  color: #A37414;
 }
 
 main {
@@ -54,7 +54,7 @@ main {
 }
 
 .counter {
-  color: #e9b44c;
+  color: #A37414;
 }
 
 .large-text {
@@ -66,7 +66,7 @@ main {
 }
 
 .explanation-text {
-  font-size: 1rem;
+  font-size: 3.5vh;
 }
 
 .group {
@@ -88,16 +88,16 @@ main {
 
 .explanation {
   background-color: #c3b296;
-  color: #ffffff;
+  color: #000000;
   padding: 3vw;
   border-radius: 20px;
-  width: 55%;
+  width: 90%;
   display: inline-block;
 
 }
 
 .button {
-  background-color: #e47d6e;
+  background-color: #AC3220;
   color: white;
   padding: 10px 16px;
   border-radius: 20px;
@@ -105,12 +105,13 @@ main {
   font-size: 1.1rem;
 }
 
-.no-answer {
-  background-color: #c1ccc9;
+.correct-text {
+  color: #AC3220;
 }
 
-main a:link    { color: #e47d6e; text-decoration: none; }
-main a:visited { color: #DC5641; text-decoration: none; }
+
+main a:link    { color: #AC3220; text-decoration: none; }
+main a:visited { color: #792316; text-decoration: none; }
 
 .group #explanation-box a:link { color: #314359; text-decoration: none; }
 .group #explanation-box a:visited { color: #314359; text-decoration: none; }
@@ -128,6 +129,26 @@ main footer h2 {
   font-size: 1.1rem;
 }
 
+/* .flex-inline {
+  justify-content: center;
+  width: 40%;
+}
+
+.flex-inline .choice-group.question {
+  display: flex;
+  text-align: left;
+  
+}
+
+.flex-inline .choice-group.question label {
+  flex-basis: 90%;
+
+}
+
+.flex-inline .choice-group.question input {
+  flex-basis: 10%;
+  text-align: right;
+} */
 
 @media all and (min-width: 800px) {
 
@@ -136,8 +157,12 @@ header h1 {
 }
 
 main a:hover   { color: #EFB2A9; text-decoration: none; }
-main a:active  { color: #E68475; text-decoration: none; }
+main a:active  { color: #9B2D1c; text-decoration: none; }
 
+
+.explanation {
+  width: 55%;
+}
 .explanation-text {
   font-size: 1.4rem;
 }
