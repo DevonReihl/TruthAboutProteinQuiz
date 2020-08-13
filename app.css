@@ -36,6 +36,9 @@ header h1 {
     margin: 3vh;
   }
 
+.header-txt-color {
+  color: #E6AC37;
+}
 .text-yellow {
   color: #A37414;
 }
